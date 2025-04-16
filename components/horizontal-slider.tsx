@@ -4,20 +4,20 @@ import Image from 'next/image';
 
 const slider1 = [
     {
-        color: "#613d3d",
-        src: "/staff-time-track/sign-in.png"
+        color: "#e3e5e7",
+        src: "/c2.jpg"
     },
     {
-        color: "#2a212b",
-        src: "/staff-time-track/home-page-min.png"
+        color: "#d6d7dc",
+        src: "/decimal.jpg"
     },
     {
-        color: "#212b23",
-        src: "/staff-time-track/home-page-max.png"
+        color: "#e3e3e3",
+        src: "/funny.jpg"
     },
     {
         color: "#21242b",
-        src: "/staff-time-track/staff-time-track.png"
+        src: "/google.jpg"
     }
 ]
 
@@ -51,7 +51,7 @@ const HorizontalSlider = () => {
     const x2 = useTransform(scrollYProgress, [0, 1], [0, -150])
     const height = useTransform(scrollYProgress, [0, 0.9], [50, 0])
     return (
-        <div ref={container} className="flex flex-col gap-[3vw] relative mt-[200px] bg-white z-[1]">
+        <div ref={container} className="flex flex-col gap-[3vw] relative pt-[200px] bg-white z-[1]">
             <motion.div style={{ x: x1 }} className="flex relative gap-[3vw] w-[120vw] left-[-10vw]">
                 {
                     slider1.map((project, index) => {

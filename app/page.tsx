@@ -9,10 +9,11 @@ import Description from '@/components/description';
 import Projects from '@/components/projects';
 import Contact from '@/components/contact';
 import HorizontalSlider from '@/components/horizontal-slider';
+import Cursor from '@/components/cursor';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isActive, setIsActive] = useState(false);
   useEffect(() => {
     (
       async () => {
@@ -29,15 +30,18 @@ export default function Home() {
     )()
   }, [])
   return (
-    <main>
+    <main
+      className='relative w-full h-full'
+    >
       <AnimatePresence mode='wait'>
         {isLoading && <Preloader />}
       </AnimatePresence>
       <Landing />
-      <Description />
+      <Description setIsActive={setIsActive} />
       <Projects />
       <HorizontalSlider />
-      <Contact />
+      <Contact setIsActive={setIsActive} />
+      <Cursor isActive={isActive} />
     </main>
   );
 }

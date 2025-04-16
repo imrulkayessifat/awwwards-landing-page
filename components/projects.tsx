@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import Image from 'next/image';
 
-import Rounded from '@/components/rounded';
+import Magnetic from '@/components/magnetic';
 
 interface Project {
     title: string;
@@ -105,7 +105,7 @@ const Projects = () => {
         setDetailsModal({ active, index })
     }
     return (
-        <main onMouseMove={(e) => { moveItems(e.clientX, e.clientY) }} className="flex flex-col items-center mt-[300px] px-[200px]">
+        <main onMouseMove={(e) => { moveItems(e.clientX, e.clientY) }} className="flex bg-[#FFF5E3] pb-10 flex-col items-center px-[200px]">
             <div className="max-w-[1400px] w-full flex flex-col items-center justify-center mb-[100px]">
                 {
                     projects.map((project, index) => {
@@ -118,9 +118,12 @@ const Projects = () => {
                     })
                 }
             </div>
-            <Rounded>
-                <p>More work</p>
-            </Rounded>
+            <Magnetic>
+                <button className="px-[60px] py-[15px] relative  group overflow-hidden rounded-full border border-gray-500 cursor-pointer group">
+                    <span className="absolute bottom-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-lime-300 group-hover:h-full opacity-90"></span>
+                    <span className="relative group-hover:text-black">More Work</span>
+                </button>
+            </Magnetic>
             <>
                 <motion.div ref={modalContainer} variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"} className="fixed bg-transparent top-1/2 left-1/2 h-[400px] w-[450px] overflow-hidden pointer-events-none z-[3]">
                     <div style={{ top: index * -100 + "%" }} className="relative w-full h-full transition-[top] duration-[0.5s] ease-[cubic-bezier(0.76,0,0.24,1)]">
