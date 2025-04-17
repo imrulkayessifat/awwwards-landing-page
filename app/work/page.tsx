@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 
 import Curve from '@/components/curve'
 import Rounded from '@/components/rounded'
+import Cursor from '@/components/cursor'
 import WorkProject from '@/components/work/work-project'
 
 const slideUp = {
@@ -18,7 +19,8 @@ const slideUp = {
 }
 
 const Page = () => {
-
+    const [hasEntered, setHasEntered] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     useEffect(() => {
         (
             async () => {
@@ -38,7 +40,11 @@ const Page = () => {
             <motion.main
                 variants={slideUp}
                 initial="initial"
-                animate="enter" className='flex flex-col mx-[200px] gap-10' style={{
+                animate="enter"
+                onAnimationComplete={(definition) => {
+                    if (definition === 'enter') setHasEntered(true);
+                }}
+                className='flex flex-col mx-[200px] gap-10' style={{
                     paddingTop: 'calc(clamp(5em,21vh,12em) * 0.33)',
                     paddingBottom: 'calc(clamp(5em,21vh,12em) * 0.66)'
                 }}>
@@ -50,7 +56,7 @@ const Page = () => {
                             transform: 'translate(0px, 0vh)'
                         }}
                         >
-                            <h1 className='flex flex-col' style={{
+                            <h1 onMouseOver={() => { setIsActive(true) }} onMouseLeave={() => { setIsActive(false) }} className='flex flex-col' style={{
                                 fontSize: 'calc(clamp(3.25em, 7vw, 8em) * .875)',
                                 lineHeight: 1.065,
                                 fontWeight: 450
@@ -68,6 +74,11 @@ const Page = () => {
                 </div>
                 <WorkProject />
             </motion.main>
+            {
+                hasEntered && (
+                    <Cursor isActive={isActive} />
+                )
+            }
         </Curve>
     )
 }
