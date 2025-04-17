@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import Image from 'next/image';
 
@@ -72,7 +72,11 @@ const scaleAnimation = {
 const WorkProject = () => {
     const [modal, setModal] = useState<{ active: boolean; index: number }>({ active: false, index: 0 });
     const { active, index } = modal;
-
+    const container = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ["start end", "end start"]
+    })
     const modalContainer = useRef<HTMLDivElement | null>(null);
     const cursor = useRef<HTMLDivElement | null>(null);
     const cursorLabel = useRef<HTMLDivElement | null>(null);
@@ -108,9 +112,9 @@ const WorkProject = () => {
         moveItems(x, y)
         setModal({ active, index })
     }
-
+    const height = useTransform(scrollYProgress, [0, 0.9], [50, 0])
     return (
-        <main onMouseMove={(e) => { moveItems(e.clientX, e.clientY) }} className="flex pb-10 flex-col items-center">
+        <main ref={container} onMouseMove={(e) => { moveItems(e.clientX, e.clientY) }} className="flex pb-10 flex-col items-center">
             <div className="max-w-[1400px] w-full flex flex-col items-center justify-center mb-[100px]">
                 <div className="flex w-full justify-between items-center px-[100px] py-[50px] cursor-pointer transition-all duration-200 last:border-b hover:opacity-50 group" key={index}>
                     <p className='w-1/3 text-gray-300 text-left'>Project</p>
@@ -154,6 +158,9 @@ const WorkProject = () => {
                 <motion.div ref={cursor} className="fixed z-[3] flex items-center justify-center w-[80px] h-[80px] rounded-full bg-[#455CE9] text-white text-[14px] font-light pointer-events-none" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}></motion.div>
                 <motion.div ref={cursorLabel} className="fixed z-[3] flex items-center justify-center w-[80px] h-[80px] rounded-full text-white text-[14px] font-light pointer-events-none" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
             </>
+            <motion.div style={{ height }} className="relative mt-[100px]">
+                <div className="h-[1550%] w-[120%] left-[-10%] rounded-b-[50%] z-[1] absolute shadow-[0px_60px_50px_rgba(0,0,0,0.748)]"></div>
+            </motion.div>
         </main>
     )
 }

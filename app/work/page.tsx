@@ -44,10 +44,11 @@ const Page = () => {
                 onAnimationComplete={(definition) => {
                     if (definition === 'enter') setHasEntered(true);
                 }}
-                className='flex flex-col mx-[200px] gap-10' style={{
+                className='flex flex-col px-[200px] gap-10 w-screen relative' style={{
                     paddingTop: 'calc(clamp(5em,21vh,12em) * 0.33)',
                     paddingBottom: 'calc(clamp(5em,21vh,12em) * 0.66)'
-                }}>
+                }}
+            >
                 <div className='max-w-[1600px]' style={{
                     paddingTop: 'calc(clamp(2.5em,8vh,8em) * 2)',
                 }}>
@@ -74,6 +75,7 @@ const Page = () => {
                 </div>
                 <WorkProject />
             </motion.main>
+            {/* <Contact setIsActive={setIsActive} /> */}
             {
                 hasEntered && (
                     <Cursor isActive={isActive} />
