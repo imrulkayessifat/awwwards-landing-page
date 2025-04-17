@@ -66,11 +66,12 @@ const Header = () => {
             >
                 <Rounded
                     onClick={() => setIsActive(!isActive)}
+                    backgroundColor="rgb(69,92,233)"
                     className="m-5 w-20 h-20 rounded-full bg-[#1C1D20] flex items-center justify-center cursor-pointer relative"
                 >
                     <div
                         className={`relative w-full z-[1] before:content-[''] after:content-[''] before:block after:block before:h-[1px] after:h-[1px] before:w-[40%] after:w-[40%] before:bg-white after:bg-white before:mx-auto after:mx-auto before:relative after:relative before:transition-transform after:transition-transform
-          ${isActive ? 'before:rotate-[-45deg] after:rotate-[45deg] before:top-0 after:top-[-1px]' : 'before:top-[5px] after:top-[-5px]'}`}
+         after:top-[-5px] before:top-[5px] before:duration-[0.3s] after:[duration-[0.3s]] ${isActive ? 'before:rotate-[-45deg] after:rotate-[45deg] before:top-0 after:top-[-1px]' : ''}`}
                     />
                 </Rounded>
             </div>
