@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
+import { use } from 'react';
+
 
 import Curve from '@/components/curve'
-import Rounded from '@/components/rounded'
-import Cursor from '@/components/cursor'
-import WorkProject from '@/components/work/work-project'
-import Contact from '@/components/contact';
+import Cursor from '@/components/cursor';
 
 const slideUp = {
     initial: {
@@ -19,9 +18,15 @@ const slideUp = {
     }
 }
 
-const Page = () => {
+const Page = ({
+    params,
+}: {
+    params: Promise<{ slug: string }>
+}) => {
     const [hasEntered, setHasEntered] = useState(false);
     const [isActive, setIsActive] = useState(false);
+    const { slug } = use(params);
+    
     useEffect(() => {
         (
             async () => {
@@ -36,6 +41,7 @@ const Page = () => {
             }
         )()
     }, [])
+
     return (
         <Curve backgroundColor="#FFFFFF">
             <motion.main
@@ -61,19 +67,11 @@ const Page = () => {
                                 lineHeight: 1.065,
                                 fontWeight: 450
                             }}>
-                                <span>Creating next level </span>
-                                <span>digital products</span>
+                                <span>{slug}</span>
                             </h1>
                         </div>
                     </div>
                 </div>
-                <div className='w-[200px] px-[200px]'>
-                    <Rounded backgroundColor="rgb(69,92,233)">
-                        <p className='relative z-10 transition-colors duration-300 group-hover:text-white'>Development</p>
-                    </Rounded>
-                </div>
-                <WorkProject />
-                <Contact setIsActive={setIsActive} />
             </motion.main>
             {
                 hasEntered && (

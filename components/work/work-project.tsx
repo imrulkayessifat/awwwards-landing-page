@@ -113,53 +113,62 @@ const WorkProject = () => {
         setModal({ active, index })
     }
     const height = useTransform(scrollYProgress, [0, 0.9], [50, 0])
+    console.log(height)
     return (
-        <main ref={container} onMouseMove={(e) => { moveItems(e.clientX, e.clientY) }} className="flex pb-10 flex-col items-center">
-            <div className="max-w-[1400px] w-full flex flex-col items-center justify-center mb-[100px]">
-                <div className="flex w-full justify-between items-center px-[100px] py-[50px] cursor-pointer transition-all duration-200 last:border-b hover:opacity-50 group" key={index}>
-                    <p className='w-1/3 text-gray-300 text-left'>Project</p>
-                    <p className='w-1/3 text-gray-300 text-center'>Client</p>
-                    <p className='w-1/3 text-gray-300 text-right'>Year</p>
-                </div>
-                {
-                    projects.map((project, index) => {
-                        return (
-                            <div className="flex w-full justify-between items-start px-[100px] py-[50px] border-t border-[#c9c9c9] cursor-pointer transition-all duration-200 last:border-b hover:opacity-50 group" key={index}>
-                                <h2 className="w-1/3 text-[25px] m-0 font-normal transition-all duration-400 group-hover:-translate-x-[10px]" onMouseEnter={(e) => { manageModal(true, index, e.clientX, e.clientY) }} onMouseLeave={(e) => { manageModal(false, index, e.clientX, e.clientY) }}>{project.title}</h2>
-
-                                <p className="w-1/3 font-light text-center transition-all duration-400 group-hover:translate-x-[10px]">{project.client}</p>
-                                <p className="w-1/3 font-light text-right transition-all duration-400 group-hover:translate-x-[10px]">{project.year}</p>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-            <Rounded backgroundColor="rgb(69,92,233)">
-                <p className='relative z-10 transition-colors duration-300 group-hover:text-white'>More work</p>
-            </Rounded>
-            <>
-                <motion.div ref={modalContainer} variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"} className="fixed bg-transparent top-1/2 left-1/2 h-[800px] w-[850px] overflow-hidden pointer-events-none z-[3]">
-                    <div style={{ top: index * -100 + "%" }} className="relative w-full h-full transition-[top] duration-[0.5s] ease-[cubic-bezier(0.76,0,0.24,1)]">
-                        {
-                            projects.map((project, index) => {
-                                const { src } = project
-                                return <div className="flex items-center justify-center w-full h-full" style={{ backgroundColor: "transparent" }} key={`modal_${index}`}>
-                                    <Image
-                                        src={`${src}`}
-                                        width={600}
-                                        height={0}
-                                        alt="image"
-                                    />
-                                </div>
-                            })
-                        }
+        <main
+            ref={container}
+            onMouseMove={(e) => { moveItems(e.clientX, e.clientY) }}
+            className="flex flex-col gap-[3vw] relative bg-white z-[1]"
+        >
+            <div className='w-full flex flex-col gap-10 items-center justify-center px-[200px]'>
+                <div className="max-w-[1400px] w-full flex flex-col">
+                    <div className="flex w-full justify-between items-center px-[100px] py-[50px] cursor-pointer transition-all duration-200 last:border-b hover:opacity-50 group">
+                        <p className='w-1/3 text-gray-300 text-left'>Project</p>
+                        <p className='w-1/3 text-gray-300 text-center'>Client</p>
+                        <p className='w-1/3 text-gray-300 text-right'>Year</p>
                     </div>
-                </motion.div>
-                <motion.div ref={cursor} className="fixed z-[3] flex items-center justify-center w-[80px] h-[80px] rounded-full bg-[#455CE9] text-white text-[14px] font-light pointer-events-none" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}></motion.div>
-                <motion.div ref={cursorLabel} className="fixed z-[3] flex items-center justify-center w-[80px] h-[80px] rounded-full text-white text-[14px] font-light pointer-events-none" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
-            </>
+                    {
+                        projects.map((project, index) => {
+                            return (
+                                <div className="flex w-full justify-between items-start px-[100px] py-[50px] border-t border-[#c9c9c9] cursor-pointer transition-all duration-200 last:border-b hover:opacity-50 group" key={index}>
+                                    <h2 className="w-1/3 text-[25px] m-0 font-normal transition-all duration-400 group-hover:-translate-x-[10px]" onMouseEnter={(e) => { manageModal(true, index, e.clientX, e.clientY) }} onMouseLeave={(e) => { manageModal(false, index, e.clientX, e.clientY) }}>{project.title}</h2>
+
+                                    <p className="w-1/3 font-light text-center transition-all duration-400 group-hover:translate-x-[10px]">{project.client}</p>
+                                    <p className="w-1/3 font-light text-right transition-all duration-400 group-hover:translate-x-[10px]">{project.year}</p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div className='w-[200px]'>
+                    <Rounded backgroundColor="rgb(69,92,233)">
+                        <p className='relative z-10 transition-colors duration-300 group-hover:text-white'>More work</p>
+                    </Rounded>
+                </div>
+                <>
+                    <motion.div ref={modalContainer} variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"} className="fixed bg-transparent top-1/2 left-1/2 h-[800px] w-[850px] overflow-hidden pointer-events-none z-[3]">
+                        <div style={{ top: index * -100 + "%" }} className="relative w-full h-full transition-[top] duration-[0.5s] ease-[cubic-bezier(0.76,0,0.24,1)]">
+                            {
+                                projects.map((project, index) => {
+                                    const { src } = project
+                                    return <div className="flex items-center justify-center w-full h-full" style={{ backgroundColor: "transparent" }} key={`modal_${index}`}>
+                                        <Image
+                                            src={`${src}`}
+                                            width={600}
+                                            height={0}
+                                            alt="image"
+                                        />
+                                    </div>
+                                })
+                            }
+                        </div>
+                    </motion.div>
+                    <motion.div ref={cursor} className="fixed z-[3] flex items-center justify-center w-[80px] h-[80px] rounded-full bg-[#455CE9] text-white text-[14px] font-light pointer-events-none" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}></motion.div>
+                    <motion.div ref={cursorLabel} className="fixed z-[3] flex items-center justify-center w-[80px] h-[80px] rounded-full text-white text-[14px] font-light pointer-events-none" variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
+                </>
+            </div>
             <motion.div style={{ height }} className="relative mt-[100px]">
-                <div className="h-[1550%] w-[120%] left-[-10%] rounded-b-[50%] z-[1] absolute shadow-[0px_60px_50px_rgba(0,0,0,0.748)]"></div>
+                <div className="h-[1550%] w-[120%] left-[-10%] rounded-b-[50%] z-[1] bg-white absolute shadow-[0px_60px_50px_rgba(0,0,0,0.748)]"></div>
             </motion.div>
         </main>
     )

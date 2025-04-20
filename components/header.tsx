@@ -35,7 +35,7 @@ const Header = () => {
 
     useEffect(() => {
         if (isActive) setIsActive(false)
-    }, [pathname])
+    }, [isActive])
 
     useLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger)
@@ -49,12 +49,18 @@ const Header = () => {
             }
         })
     }, [])
+    const isDynamicRoute = (pathname: string) => {
+        const staticPaths = ['/work', '/about', '/contact'];
+        const basePath = '/' + pathname.split('/')[1]; // e.g. '/work' from '/work/event'
+
+        return staticPaths.includes(basePath) && pathname !== basePath;
+    };
     console.log(pathname)
     return (
         <>
             <div
                 ref={header}
-                className={`absolute top-0 z-[1] w-full p-9 flex justify-between items-center ${(pathname === '/work' || pathname === '/about') ? 'text-black' : 'text-white'} font-light`}
+                className={`absolute top-0 z-[1] w-full p-9 flex justify-between items-center ${(pathname === '/work' || pathname === '/about' || isDynamicRoute(pathname)) ? 'text-black' : 'text-white'} font-light`}
             >
                 <Magnetic>
                     <Link href="/">
@@ -76,7 +82,7 @@ const Header = () => {
                                 <Link className="cursor-pointer" href={data.href}>
                                     {data.title}
                                 </Link>
-                                <div className={`absolute w-[5px] h-[5px] top-[45px] left-1/2 ${(pathname === '/work' || pathname === '/about') ? 'bg-black' : 'bg-white'} rounded-full transform -translate-x-1/2 scale-0 transition-transform duration-200 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-100`} />
+                                <div className={`absolute w-[5px] h-[5px] top-[45px] left-1/2 ${(pathname === '/work' || pathname === '/about' || isDynamicRoute(pathname)) ? 'bg-black' : 'bg-white'} rounded-full transform -translate-x-1/2 scale-0 transition-transform duration-200 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-100`} />
                             </div>
                         </Magnetic>
                     ))}
